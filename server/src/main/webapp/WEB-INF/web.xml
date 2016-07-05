@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	 version="2.4">
+
+	<display-name>server</display-name>
+
+	<listener>     
+	  <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>     
+	</listener>  
+	
+	<listener>
+		<listener-class>com.blake.listener.DatabaseCleaner</listener-class>
+	</listener>
+
+	<!--contextConfigLocation在 ContextLoaderListener类中的默认值是 /WEB-INF/applicationContext.xml-->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- <param-value>/WEB-INF/applicationContext.xml</param-value>  -->
+		<param-value>classpath:applicationContext*.xml</param-value>
+	</context-param>
+
+
+ 	<servlet>  
+         <servlet-name>insert</servlet-name>  
+         <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>  
+         
+     </servlet>  
+     <servlet-mapping>  
+         <servlet-name>insert</servlet-name>  
+         <url-pattern>/api/insert</url-pattern>  
+     </servlet-mapping>     
+</web-app>
