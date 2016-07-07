@@ -19,7 +19,7 @@
     http://www.springframework.org/schema/util/spring-util.xsd">  
     
     
-        <bean id="insert" class="com.blake.request.InsertRequest" />
+        <bean id="insert" class="com.blake.request.DBRequestHandler" />
         
         <import resource="classpath:mongodb.xml"/>
         
