@@ -8,9 +8,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
+import net.sf.json.JSONObject;
 
-import com.blake.httpmethod.HttpGetRequest;
 import com.blake.response.UnifiedResponse;
 import com.blake.util.Constants;
 import com.blake.util.share.DBaccessor;
@@ -52,13 +51,13 @@ public class EventHandler{
 		DBaccessor dbaccessor = new DBaccessor();
 		InfoAccessor accessor = new InfoAccessor(dbaccessor);
 		
-		JSONObject jo =   new JSONObject(buffer.toString());
+		JSONObject jo =   JSONObject.fromObject(buffer.toString());
 		String type = (String) jo.get("type");
 		
 		if(DBOperationType.fromString(type) == DBOperationType.insert) {
 			
-			String body = (String) jo.get("body");
-			Info info=new Info(Constants.incre.getAndAdd(1),body);
+			JSONObject body = (JSONObject) jo.get("body");
+			Info info=new Info(Constants.incre.getAndAdd(1), body.getString("text"), body.toString());
 			accessor.insert(info);
 			UnifiedResponse.sendSuccessResponse(response);
 			return;
@@ -86,5 +85,17 @@ public class EventHandler{
 			UnifiedResponse.sendResponse(response, infoList);
 		}
 		
+		if(DBOperationType.fromString(type) == DBOperationType.query) {
+			
+			String key = (String) jo.get("key");
+//			JSONObject joKey = new JSONObject();
+//			joKey.put("key", body);
+			List<Info> infoList = accessor.find(key, 0, 0);
+			if(infoList == null || infoList.size() == 0){
+				
+				UnifiedResponse.sendErrResponse(response, 2001);
+			}
+			UnifiedResponse.sendResponse(response, infoList);
+		}
 	}
 }

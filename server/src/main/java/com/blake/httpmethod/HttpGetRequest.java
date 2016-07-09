@@ -4,19 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-
-import com.blake.reptile.TwitterRecognition;
 
 public class HttpGetRequest {
-	
     /**
      * 向指定URL发送GET方法的请求
      * 
@@ -33,19 +26,7 @@ public class HttpGetRequest {
             String urlNameString = url + "?" + param;
             URL realUrl = new URL(urlNameString);
             // 打开和URL之间的连接
-            
-            
-            Properties systemProperties = System.getProperties(); 
-            systemProperties.setProperty("https.proxyHost","vip1d.banjx.com"); 
-            systemProperties.setProperty("https.proxyPort","15416"); 
-            systemProperties.setProperty("socksProxyHost", "vip1d.banjx.com");
-            systemProperties.setProperty("socksProxyPort", "15416");
-
-            InetSocketAddress addr = new InetSocketAddress("vip1d.banjx.com",15416);
-            Proxy proxy = new Proxy(Proxy.Type.HTTP, addr); // http 代理
-            
-            URLConnection connection = realUrl.openConnection(proxy);
-            
+            URLConnection connection = realUrl.openConnection();
             // 设置通用的请求属性
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
@@ -97,18 +78,15 @@ public class HttpGetRequest {
         BufferedReader in = null;
         String result = "";
         try {
+        	
             URL realUrl = new URL(url);
             // 打开和URL之间的连接
-            HttpURLConnection  conn = (HttpURLConnection) realUrl.openConnection();
-            conn.setRequestMethod("POST");
+            URLConnection conn = realUrl.openConnection();
             // 设置通用的请求属性
-            conn.setRequestProperty("Accept-Encoding", "gzip");
+            conn.setRequestProperty("accept", "*/*");
             conn.setRequestProperty("connection", "Keep-Alive");
-            conn.setRequestProperty("user-agent", "My Twitter App v1.0.23");
-            conn.setRequestProperty("grant_type", "client_credentials");
-            conn.setRequestProperty("Authorization", TwitterRecognition.getAuthCertified());
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8.");
-            
+            conn.setRequestProperty("user-agent",
+                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             // 发送POST请求必须设置如下两行
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -145,5 +123,4 @@ public class HttpGetRequest {
         }
         return result;
     }    
-
 }

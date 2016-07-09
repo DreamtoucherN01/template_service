@@ -24,7 +24,7 @@ import com.blake.util.Constants;
 
 import junit.framework.TestCase;
 
-public class HttpRequest extends TestCase {
+public class HttpRequest {
 
 	
 	public void testRequest(){

@@ -6,17 +6,21 @@ public class Info implements Serializable {
   
     private static final long serialVersionUID = -5785857960597910259L;  
       
-    private int incre;  
+    private long incre;  
+    
+    private String key;
       
     private String body;
     
-	public Info(int incre, String body) {
 
-		this.incre = incre;
+	public Info(long l, String key, String body) {
+
+		this.incre = l;
+		this.key = key;
 		this.body = body;
 	}
 
-	public int getIncre() {
+	public long getIncre() {
 		return incre;
 	}
 
@@ -31,9 +35,18 @@ public class Info implements Serializable {
 	public void setBody(String body) {
 		this.body = body;
 	}
+	
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
 
 	@Override
 	public String toString() {
-		return "User [incre=" + incre + ", body=" + body + "]";
-	}  
+		return "Info [incre=" + incre + ", key=" + key + ", body=" + body + "]";
+	}
+
 }

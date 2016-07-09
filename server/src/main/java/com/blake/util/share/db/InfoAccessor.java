@@ -34,6 +34,7 @@ public class InfoAccessor implements IInfoDao{
 			db.createCollection("twitter", dbObject);
 		} else {
 			
+			System.out.println("insert info : " + dbObject);
 			twitter.insert(dbObject);
 		}
 	}
@@ -99,9 +100,24 @@ public class InfoAccessor implements IInfoDao{
 		return infolist;
 	}
 
-	public List<Info> find(Info criteriaInfo, int skip, int limit) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Info> find(String criteriaInfo, int skip, int limit) {
+		
+		if(criteriaInfo == null) {
+			
+			return findAll();
+		}
+		List<Info> infolist = new ArrayList<Info>();
+	    DBCursor cur = twitter.find();  
+	    while (cur.hasNext()) {
+	    	
+	    	Gson gson=new Gson();
+	    	Info info = gson.fromJson( gson.toJson(cur.next()), Info.class);
+	    	if(info.getBody().contains(criteriaInfo)) {
+	    		
+	    		infolist.add(info);
+	    	}
+	    }
+		return infolist;
 	}
 
 	public Info findAndModify(Info criteriaInfo, Info updateInfo) {
@@ -115,8 +131,8 @@ public class InfoAccessor implements IInfoDao{
 	}
 
 	public long count(Info criteriaInfo) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return twitter.count();
 	}
 	
     public void destory() {
@@ -124,5 +140,4 @@ public class InfoAccessor implements IInfoDao{
     	twitter = null;
         System.gc();
     }
-
 }

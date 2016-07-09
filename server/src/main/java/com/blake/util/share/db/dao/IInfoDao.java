@@ -22,7 +22,7 @@ public interface IInfoDao {
 
     List<Info> findAll();  
       
-    List<Info> find(Info criteriaInfo, int skip, int limit);  
+    List<Info> find(String key, int skip, int limit);  
 
     Info findAndModify(Info criteriaInfo, Info updateInfo);  
 
