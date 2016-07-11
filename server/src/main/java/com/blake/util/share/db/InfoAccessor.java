@@ -112,7 +112,7 @@ public class InfoAccessor implements IInfoDao{
 	    	
 	    	Gson gson=new Gson();
 	    	Info info = gson.fromJson( gson.toJson(cur.next()), Info.class);
-	    	if(info.getBody().contains(criteriaInfo)) {
+	    	if(null != info.getKey() && info.getKey().contains(criteriaInfo)) {
 	    		
 	    		infolist.add(info);
 	    	}

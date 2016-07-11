@@ -94,8 +94,9 @@ public class TwitterSearch{
                 String str = DataObjectFactory.getRawJSON(status);              
                 try {  
                     //JSONObject nnstr = new JSONObject(newstr);  
-                    DBObject dbObject =(DBObject)JSON.parse(str);  
-                    System.out.println(dbObject + "\n");  
+//                    DBObject dbObject =(DBObject)JSON.parse(str); 
+                    JSONObject jo = JSONObject.fromObject(str);
+                    System.out.println(jo.get("text") + "\n");  
                 }  catch (Exception e) {  
                     e.printStackTrace();  
                 }   
@@ -122,15 +123,14 @@ public class TwitterSearch{
             }  
         };  
         twitterStream.addListener(listener);
-        String[] trackArray;  
-        String[] Track = {"IMDB", "movie","film","cinema", };  
-        //trackArray[0] = "Obama";  
-        //trackArray[1] = "Romney";  
+//        String[] Track = {"加拿大西部", "艾伯塔省","McMurray","Fort", "Rachel Notley" , "FortMcMurray","china","America"};  
+//        String[] Track = {"Obama"};  
+        String[] Track = {"obama"};
           
         FilterQuery filter = new FilterQuery();  
-        filter.track(Track);  
-        twitterStream.filter(filter);  
-        twitterStream.sample();
+        filter.track(Track); 
+//        filter.language("EN");
+        twitterStream.filter(filter);
         
         
         

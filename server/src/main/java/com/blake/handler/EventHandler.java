@@ -88,8 +88,6 @@ public class EventHandler{
 		if(DBOperationType.fromString(type) == DBOperationType.query) {
 			
 			String key = (String) jo.get("key");
-//			JSONObject joKey = new JSONObject();
-//			joKey.put("key", body);
 			List<Info> infoList = accessor.find(key, 0, 0);
 			if(infoList == null || infoList.size() == 0){
 				

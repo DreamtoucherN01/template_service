@@ -23,12 +23,12 @@
 
 
  	<servlet>  
-         <servlet-name>insert</servlet-name>  
+         <servlet-name>request</servlet-name>  
          <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>  
          
      </servlet>  
      <servlet-mapping>  
-         <servlet-name>insert</servlet-name>  
-         <url-pattern>/api/insert</url-pattern>  
+         <servlet-name>request</servlet-name>  
+         <url-pattern>/api/request</url-pattern>  
      </servlet-mapping>     
 </web-app>
