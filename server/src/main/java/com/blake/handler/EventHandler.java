@@ -57,7 +57,7 @@ public class EventHandler{
 		if(DBOperationType.fromString(type) == DBOperationType.insert) {
 			
 			JSONObject body = (JSONObject) jo.get("body");
-			Info info=new Info(Constants.incre.getAndAdd(1), body.getString("text"), body.toString());
+			Info info = new Info(Constants.incre.getAndAdd(1), body.getString("text"), body.toString());
 			accessor.insert(info);
 			UnifiedResponse.sendSuccessResponse(response);
 			return;
@@ -88,7 +88,15 @@ public class EventHandler{
 		if(DBOperationType.fromString(type) == DBOperationType.query) {
 			
 			String key = (String) jo.get("key");
-			List<Info> infoList = accessor.find(key, 0, 0);
+			String mode = (String) jo.get("mode");
+			List<Info> infoList = null;
+			if(mode != null && !mode.equals("fuzzy")) {
+				
+				infoList = accessor.find(key, 0, 0);
+			} else {
+				
+				infoList = accessor.fuzzyFind(key, 0, 0);
+			}
 			if(infoList == null || infoList.size() == 0){
 				
 				UnifiedResponse.sendErrResponse(response, 2001);

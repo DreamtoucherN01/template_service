@@ -29,5 +29,9 @@ public interface IInfoDao {
     Info findAndRemove(Info criteriaInfo);  
 
     long count(Info criteriaInfo);  
+    
+    void createIndex(String key);  
+    
+    boolean hasIndex();
 
 }

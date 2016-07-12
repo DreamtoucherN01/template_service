@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 
 public class test {
 	
-	public void testTest() {
+	public static void main(String args[]) {
 		
 		int i = 0;
 		while(true) {
@@ -24,7 +24,7 @@ public class test {
 	        System.out.println(jo.toString());
 	        System.out.println(HttpGetRequest.sendPost(Constants.serverUrl, jo.toString()));
 //	        try {
-//				Thread.sleep(5);
+//				Thread.sleep(50);
 //			} catch (InterruptedException e) {
 //				e.printStackTrace();
 //			}

@@ -9,7 +9,7 @@ public class Info implements Serializable {
     private long incre;  
     
     private String key;
-      
+    
     private String body;
     
 

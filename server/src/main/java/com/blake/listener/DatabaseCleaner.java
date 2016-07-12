@@ -35,11 +35,12 @@ public class DatabaseCleaner implements ServletContextListener{
 		DBaccessor dbaccessor = new DBaccessor();
 		InfoAccessor accessor = new InfoAccessor(dbaccessor);
 		long count = accessor.count(null);
-		System.out.println("database inited, we have " + count + "items");
+		if(count > 100000 && !accessor.hasIndex()) {
+			
+			accessor.createIndex(null);
+		}
 		Constants.incre = new AtomicLong(count + 1);
-	 
-//		Thread thread = new Thread(new SpiderThread());
-//		thread.start();
+		System.out.println("database inited, we have " + count + "items");
 	 
 		System.out.println("contextInitialized");
 	}
