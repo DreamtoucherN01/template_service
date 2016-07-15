@@ -18,9 +18,35 @@ public class UnifiedResponse {
 	final static Logger logger = LoggerFactory.getLogger(UnifiedResponse.class);
 
 	public static void sendResponse(HttpServletResponse response,
+			List<Info> infoList, int page , boolean done) {
+
+		JSONObject result =  new JSONObject();
+		result.put("result", true);
+		result.put("err", 0);
+		result.put("data", JSONArray.fromObject(infoList)); 
+		result.put("ver", 1);
+		result.put("page", page);
+		
+		if(logger.isDebugEnabled()) {
+			
+			logger.debug("the response is {}" , result.toString());
+		}
+		response.setContentLength(result.toString().getBytes().length);
+		try {
+			
+			response.getWriter().write(result.toString());
+			response.getWriter().close();
+			return;
+		} catch (IOException e) {
+			
+			logger.error("catch IOEXception : {}", e);
+		}
+	}
+	
+	public static void sendResponse(HttpServletResponse response,
 			List<Info> infoList) {
 
-		JSONObject result =   new JSONObject();
+		JSONObject result =  new JSONObject();
 		result.put("result", true);
 		result.put("err", 0);
 		result.put("data", JSONArray.fromObject(infoList)); 
@@ -44,7 +70,7 @@ public class UnifiedResponse {
 
 	public static void sendErrResponse(HttpServletResponse response, int errcode) {
 
-		String respStr = "{\"result\":false,\"err\":1001,\"ver\":1}";
+		String respStr = "{\"result\":false,\"err\":1001,\"ver\":1,\"desc\":\"check your search key or narrow search range\"}";
 		if(logger.isDebugEnabled()) {
 			
 			logger.debug("the response is {}" , respStr);

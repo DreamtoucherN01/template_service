@@ -5,6 +5,8 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Constants {
 	
 	public static int collectionNumber = 100;
+	
+	public static int queryListMaxSize = 1000;
 
 	public static String DBCollectionName = "twitter";
 	
@@ -25,4 +27,11 @@ public class Constants {
 	public static String twitterParams = "count=2&since_id=240247560269340670";
 	
 	public static String serverUrl = "http://127.0.0.1:8080/server/api/request"; 
+	
+	public static String yahooPlaceFinderAPI = "http://yboss.yahooapis.com/geo/placefinder";
+	
+	public static String yahooConsumerKey = "";
+	
+	public static String yahooConsumerSecret = "";
+	
 }

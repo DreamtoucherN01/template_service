@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>dbserver</groupId>
 	<artifactId>server</artifactId>
-	<packaging>war</packaging>
+	<packaging>pom</packaging> 
 	<version>0.0.1-SNAPSHOT</version>
 	<!-- TODO project name  -->
 	<name>quickstart</name>
@@ -20,6 +20,11 @@
 	</licenses>
 
 	<dependencies>
+		<dependency>
+			<groupId>decoupleserver</groupId>
+			<artifactId>decoupler</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -170,6 +175,12 @@
 		    <artifactId>twitter4j-stream</artifactId>
 		    <version>4.0.4</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/oauth.signpost/signpost-core -->
+		<dependency>
+		    <groupId>oauth.signpost</groupId>
+		    <artifactId>signpost-core</artifactId>
+		    <version>1.2.1.2</version>
+		</dependency>
 		
 	</dependencies>
 
@@ -215,4 +226,7 @@
 		<jetty.version>6.1.4</jetty.version>
 	</properties>
 
+	<modules>
+		<module>decoupler</module>
+	</modules>
 </project>

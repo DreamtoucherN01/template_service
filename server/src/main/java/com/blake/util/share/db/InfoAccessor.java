@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import net.sf.json.JSONObject;
 
 import com.blake.mongoutil.DBCollectionCommander;
+import com.blake.response.UnifiedResponse;
 import com.blake.util.Constants;
 import com.blake.util.share.DBaccessor;
 import com.blake.util.share.db.dao.IInfoDao;
@@ -122,7 +123,7 @@ public class InfoAccessor implements IInfoDao{
 		
 		if(criteriaInfo == null) {
 			
-			return findAll();
+			return null;
 		}
 		List<Info> infolist = new ArrayList<Info>();
 
@@ -142,9 +143,13 @@ public class InfoAccessor implements IInfoDao{
 		    		
 		    		infolist.add(info);
 		    	}
+		    	if(infolist.size() > Constants.queryListMaxSize) {
+		    		
+		    		infolist = null;
+		    		return null;
+		    	}
 		    }
 	    }
-		System.out.println(infolist);
 		return infolist;
 	}
 

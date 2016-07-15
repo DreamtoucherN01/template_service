@@ -15,7 +15,7 @@ import com.blake.util.Constants;
 import com.blake.util.share.DBaccessor;
 import com.blake.util.share.db.InfoAccessor;
 
-public class DatabaseCleaner implements ServletContextListener{
+public class BackgroundListener implements ServletContextListener{
 
 	private ScheduledExecutorService scheduler;
 	

@@ -19,9 +19,12 @@
     http://www.springframework.org/schema/util/spring-util.xsd">  
     
     
-        <bean id="request" class="com.blake.request.DBRequestHandler" />
+        <bean id="HttpRequestHandlerServlet" class="com.blake.request.DBRequestHandler" />
         
-        <import resource="classpath:mongodb.xml"/>
+        <bean id="DecouplerSreverHandler" class="com.blake.request.DecouplerSreverHandler" />
         
+        <import resource="classpath*:mongodb.xml"/>
+        
+        <import resource="classpath*:applicatioinContext-decoupler.xml"/>
                
 </beans>         

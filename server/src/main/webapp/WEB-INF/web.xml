@@ -11,7 +11,7 @@
 	</listener>  
 	
 	<listener>
-		<listener-class>com.blake.listener.DatabaseCleaner</listener-class>
+		<listener-class>com.blake.listener.BackgroundListener</listener-class>
 	</listener>
 
 	<!--contextConfigLocation在 ContextLoaderListener类中的默认值是 /WEB-INF/applicationContext.xml-->
@@ -23,12 +23,21 @@
 
 
  	<servlet>  
-         <servlet-name>request</servlet-name>  
+         <servlet-name>HttpRequestHandlerServlet</servlet-name>  
          <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>  
-         
      </servlet>  
+     <servlet>  
+         <servlet-name>DecouplerSreverHandler</servlet-name>  
+         <servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>  
+     </servlet>
+     
      <servlet-mapping>  
-         <servlet-name>request</servlet-name>  
+         <servlet-name>HttpRequestHandlerServlet</servlet-name>  
          <url-pattern>/api/request</url-pattern>  
-     </servlet-mapping>     
+     </servlet-mapping> 
+     <servlet-mapping>  
+         <servlet-name>DecouplerSreverHandler</servlet-name>  
+         <url-pattern>/decouple/request</url-pattern>  
+     </servlet-mapping> 
+         
 </web-app>
