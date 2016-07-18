@@ -8,9 +8,11 @@ import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.traversal.Traverser;
 
+import com.blake.util.Constants;
+
 public interface Neo4jService {
 	
-	final String SERVER_ROOT_URI = "http://192.168.185.59:7474/db/data/";
+	final String SERVER_ROOT_URI = Constants.SERVER_ROOT_URI;
 	
 	final String PRIMARY_KEY = "name";  
 	
