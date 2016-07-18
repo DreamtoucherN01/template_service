@@ -45,35 +45,28 @@ public class Neo4jTest {
 		Transaction tx = graphDB.beginTx(); 
 		Neo4jServiceImp neo = new Neo4jServiceImp();
 		
-		HashMap props = new HashMap();
-		props.put("name", "jack");
-		props.put("age", "22");
-		Node jack = neo.addNode(graphDB,nodeIndex, props);
-		
-		props = new HashMap();
-		props.put("name", "gg");
-		props.put("age", "21");
-		Node gg = neo.addNode(graphDB,nodeIndex, props);
-		
-		props = new HashMap();
-		props.put("name", "qq");
-		props.put("age", "23");
-		Node qq = neo.addNode(graphDB,nodeIndex, props);
-		
-		neo.addRelationship(jack, gg, com.blake.neo4j.Neo4jService.RelTypes.FAMILIAR);
-		neo.addRelationship(qq, gg, com.blake.neo4j.Neo4jService.RelTypes.FAMILIAR);
-		neo.addRelationship(jack, qq, com.blake.neo4j.Neo4jService.RelTypes.FAMILIAR);
+//		HashMap props = new HashMap();
+//		props.put("name", "jack");
+//		props.put("age", "22");
+//		Node jack = neo.addNode(graphDB,nodeIndex, props);
+//		
+//		props = new HashMap();
+//		props.put("name", "gg");
+//		props.put("age", "21");
+//		Node gg = neo.addNode(graphDB,nodeIndex, props);
+//		
+//		props = new HashMap();
+//		props.put("name", "qq");
+//		props.put("age", "23");
+//		Node qq = neo.addNode(graphDB,nodeIndex, props);
+//		
+//		neo.addRelationship(jack, gg, com.blake.neo4j.Neo4jService.RelTypes.FAMILIAR);
+//		neo.addRelationship(qq, gg, com.blake.neo4j.Neo4jService.RelTypes.FAMILIAR);
+//		neo.addRelationship(jack, qq, com.blake.neo4j.Neo4jService.RelTypes.FAMILIAR);
 		
 		Node node = neo.findNodeByName(graphDB, "qq");
 		if(node != null) {
 			System.out.println("find : " + node.getProperty("age"));
-		}
-		Iterable<Node> nodes = graphDB.getAllNodes();
-		Iterator it = nodes.iterator();
-		while(it.hasNext()){
-			
-			Node node1 = (Node) it.next();
-			neo.deleteNode(node1);
 		}
 		
 //		neo.printNodeFriends(graphDB.getNodeById(52));
