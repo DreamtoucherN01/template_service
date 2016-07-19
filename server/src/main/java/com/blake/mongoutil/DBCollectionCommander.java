@@ -34,5 +34,5 @@ public class DBCollectionCommander {
 		dbaccessor.getDb().getCollection("twitter_0").drop();
 		return 0;
 	}
-
+	
 }

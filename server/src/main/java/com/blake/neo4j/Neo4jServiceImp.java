@@ -101,6 +101,10 @@ public class Neo4jServiceImp implements Neo4jService {
 	public Node findNodeByName(GraphDatabaseService graphDB, String name) {
 
 		Index<Node> nodeIndex = graphDB.index().forNodes(INDEXNAME);
+		if(nodeIndex == null) {
+			
+			return null;
+		}
 		return nodeIndex.get(PRIMARY_KEY, name).getSingle();
 	}  
 }
