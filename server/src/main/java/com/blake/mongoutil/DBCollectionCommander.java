@@ -14,6 +14,10 @@ public class DBCollectionCommander {
 			
 			currentNum = getCurrentNum(dbaccessor);
 		}
+		if(dbaccessor.getDb().getCollection("twitter_" + currentNum).count() >= Constants.maxItemNumberPerCollection) {
+			
+			currentNum++;
+		}
 		return dbaccessor.getDb().getCollection("twitter_" + currentNum);
 	}
 
