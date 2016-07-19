@@ -1,5 +1,8 @@
 package com.blake.httprequest;
 
+import java.util.HashMap;
+import java.util.HashSet;
+
 import com.blake.cluster.algorithm.KMeansClusterAlgorithm;
 
 public class KmeansTest {
@@ -42,7 +45,9 @@ public class KmeansTest {
 		
 		KMeansClusterAlgorithm k = new KMeansClusterAlgorithm();
 		
-		k.doKMeansAlgorithn(input, 3);
+		HashMap<Integer,HashSet<double[]>> group = k.doKMeansAlgorithn(input, 3);
+		
+		k.prdoubleGroupOut(group, 11);
 	}
 
 }

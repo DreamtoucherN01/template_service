@@ -4,7 +4,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Constants {
 	
-	public static int collectionNumber = 100;
+	public static int collectionNumber = 1000;
+	
+	public static int maxItemNumberPerCollection = 1000;
 	
 	public static int queryListMaxSize = 1000;
 
@@ -33,5 +35,7 @@ public class Constants {
 	public static String yahooConsumerKey = "";
 	
 	public static String yahooConsumerSecret = "";
+	
+	public static String  SERVER_ROOT_URI = "http://192.168.185.59:7474/db/data/";
 	
 }

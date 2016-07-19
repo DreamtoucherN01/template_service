@@ -102,7 +102,7 @@ public class KMeansClusterAlgorithm {
 				}
 			}
 			
-			prdoubleGroupOut(group, time);
+//			prdoubleGroupOut(group, time);
 		}
 		
 		return group;
@@ -151,7 +151,7 @@ public class KMeansClusterAlgorithm {
 		return false;
 	}
 
-	private void prdoubleGroupOut(HashMap<Integer, HashSet<double[]>> group , double time) {
+	public void prdoubleGroupOut(HashMap<Integer, HashSet<double[]>> group , double time) {
 
 		System.out.println("group info when iterator " + time + " times");
 		Iterator<Entry<Integer, HashSet<double[]>>> entry = group.entrySet().iterator();

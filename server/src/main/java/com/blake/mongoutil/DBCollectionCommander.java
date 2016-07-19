@@ -6,10 +6,29 @@ import com.mongodb.DBCollection;
 
 public class DBCollectionCommander {
 	
+	private static int currentNum = -1;
+	
 	public static DBCollection getDBCollection(DBaccessor dbaccessor, String key){
 		
-		int hashcode = key.hashCode();
-		return dbaccessor.getDb().getCollection("twitter_" + Math.abs(hashcode%Constants.collectionNumber));
+		if(currentNum == -1) {
+			
+			currentNum = getCurrentNum(dbaccessor);
+		}
+		return dbaccessor.getDb().getCollection("twitter_" + currentNum);
+	}
+
+	private static int getCurrentNum(DBaccessor dbaccessor) {
+
+		for(int i= 0; i< Constants.collectionNumber; i++) {
+			
+			long num = dbaccessor.getDb().getCollection("twitter_" + i).count() ;
+			if(num < Constants.maxItemNumberPerCollection && num != 0) {
+				
+				return i;
+			}
+		}
+		dbaccessor.getDb().getCollection("twitter_0").drop();
+		return 0;
 	}
 
 }

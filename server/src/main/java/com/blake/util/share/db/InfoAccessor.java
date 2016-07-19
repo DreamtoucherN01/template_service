@@ -101,20 +101,20 @@ public class InfoAccessor implements IInfoDao{
 		}
 		List<Info> infolist = new ArrayList<Info>();
 
-		twitter = DBCollectionCommander.getDBCollection(dbaccessor, criteriaInfo);
-		System.out.println("find in " + twitter.getName());
-		DBCursor cur = twitter.find(new BasicDBObject("key", criteriaInfo));
-		
-	    while (cur.hasNext()) {
-	    	
-	    	Gson gson=new Gson();
-	    	Info info = gson.fromJson( gson.toJson(cur.next()), Info.class);
-	    	if(null != info.getKey() && info.getKey().contains(criteriaInfo)) {
-	    		
-	    		infolist.add(info);
-	    	}
-	    }
-	    
+		for(int i = 0;i < Constants.collectionNumber; i++) {
+			
+			twitter = dbaccessor.getDb().getCollection("twitter_" + i);
+			DBCursor cur = twitter.find(new BasicDBObject("key", criteriaInfo));
+		    while (cur.hasNext()) {
+		    	
+		    	Gson gson=new Gson();
+		    	Info info = gson.fromJson( gson.toJson(cur.next()), Info.class);
+		    	if(null != info.getKey() && info.getKey().contains(criteriaInfo)) {
+		    		
+		    		infolist.add(info);
+		    	}
+		    }
+		}
 		System.out.println(infolist);
 		return infolist;
 	}
