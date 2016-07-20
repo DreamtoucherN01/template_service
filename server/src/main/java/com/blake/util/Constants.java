@@ -8,6 +8,8 @@ public class Constants {
 	
 	public static int maxItemNumberPerCollection = 1000;
 	
+	public static boolean neo4jrun = false;
+	
 	public static int queryListMaxSize = 1000;
 
 	public static String DBCollectionName = "twitter";

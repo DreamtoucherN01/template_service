@@ -10,7 +10,5 @@ public interface DecouplerService {
 	
 	void inserDataIntoNeo4j(JSONObject jo);
 	
-	void serviceStop();
-	
 	boolean checkDataSource();
 }

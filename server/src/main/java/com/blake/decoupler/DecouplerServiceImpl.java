@@ -17,13 +17,11 @@ import com.google.gson.Gson;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 
-public class DecouplerServiceImpl implements DecouplerService {
+public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 	
 	Neo4jService neo4jService;
 	
 	DBaccessor mongoDBAccessor;
-	
-	boolean run = true;
 	
     private static GraphDatabaseService graphDB;  
     
@@ -77,22 +75,37 @@ public class DecouplerServiceImpl implements DecouplerService {
 
 	public void serviceStart() {
 		
+		System.out.println("start transtering data to neo4j database");
+		
+		if(Constants.neo4jrun) {
+			
+			System.out.println("wait for the last operation finish");
+		} else {
+			
+			Constants.neo4jrun = true;
+		}
 		graphDB = GraphDatabaseFactory.databaseFor(Constants.SERVER_ROOT_URI);  
 		nodeIndex = graphDB.index().forNodes(com.blake.neo4j.Neo4jService.INDEXNAME);
 
-		while(run) {
+		System.out.println("graphDB and nodeIndex inited");
+		
+		Node node = neo4jService.findNodeByName(graphDB, "currentCollectionNum");
+		if(node == null) {
 			
-			Node node = neo4jService.findNodeByName(graphDB, "currentCollectionNum");
-			if(node == null) {
-				
-				currentCollectionNum = 0;
-				currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + currentCollectionNum);
-				persistCurrentCollectionNum(graphDB, nodeIndex, currentCollectionNum);
-			} else {
-				
-				currentCollectionNum =Integer.valueOf( (String) (node.getProperty("value")) );
-				currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + currentCollectionNum);
-			}
+			currentCollectionNum = 0;
+			currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + currentCollectionNum);
+			persistCurrentCollectionNum(graphDB, nodeIndex, currentCollectionNum);
+		} else {
+			
+			currentCollectionNum =Integer.valueOf( (String) (node.getProperty("value")) );
+			currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + currentCollectionNum);
+		}
+		
+		if(currentCollection.count() < Constants.maxItemNumberPerCollection) {
+			
+			System.out.println("data is not ready, please wait");
+		} else {
+			
 			
 			DBCursor cur = currentCollection.find();
 		    while (cur.hasNext()) {
@@ -104,22 +117,30 @@ public class DecouplerServiceImpl implements DecouplerService {
 			
 			persistCurrentCollectionNum(graphDB, nodeIndex, ++currentCollectionNum);
 		}
+		
+		Constants.neo4jrun = false;
+		
+		System.out.println("transtering data to neo4j finished");
 	}
 
 	private void persistCurrentCollectionNum(GraphDatabaseService graphDB2,
 			Index<Node> nodeIndex2, int currentCollectionNum2) {
 
 		Node node = neo4jService.findNodeByName(graphDB, "currentCollectionNum");
-		neo4jService.deleteNode(node);
+		if(node != null) {
+			
+			neo4jService.deleteNode(node);
+		}
+		
 		HashMap<String,String> props = new HashMap<String,String>();
 		props.put("name", "currentCollectionNum");
 		props.put("value", String.valueOf(currentCollectionNum2));
 		neo4jService.addNode(graphDB, nodeIndex, props);
 	}
 
-	public void serviceStop() {
+	public void run() {
 
-		run = false;
+		this.serviceStart();
 	}
 	
 }
