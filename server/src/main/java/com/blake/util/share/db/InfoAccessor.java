@@ -34,7 +34,6 @@ public class InfoAccessor implements IInfoDao{
 	public void insert(Info info) {
 		
 		twitter = DBCollectionCommander.getDBCollection(dbaccessor, info.getKey());
-		System.out.println("insert into " + twitter.getName());
 		Gson gson=new Gson();
 	    DBObject dbObject = (DBObject) JSON.parse(gson.toJson(info));
 	    twitter.insert(dbObject);
