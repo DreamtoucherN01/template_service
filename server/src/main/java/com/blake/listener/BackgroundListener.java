@@ -42,7 +42,6 @@ public class BackgroundListener implements ServletContextListener{
 		System.out.println("database inited, we have " + count + "items");
 	 
 		Neo4jService neo = new Neo4jServiceImp();
-		// 从现在开始 1 秒钟之后，每隔 1 秒钟执行一次 job1 
 		scheduler.scheduleAtFixedRate(new DecouplerServiceImpl(neo, dbaccessor), 1, 1, TimeUnit.MINUTES);
 		 
 		System.out.println("contextInitialized");

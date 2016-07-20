@@ -86,9 +86,6 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 		}
 		graphDB = GraphDatabaseFactory.databaseFor(Constants.SERVER_ROOT_URI);  
 		nodeIndex = graphDB.index().forNodes(com.blake.neo4j.Neo4jService.INDEXNAME);
-
-		System.out.println("graphDB and nodeIndex inited");
-		
 		Node node = neo4jService.findNodeByName(graphDB, "currentCollectionNum");
 		if(node == null) {
 			
