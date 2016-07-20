@@ -98,7 +98,8 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 			currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + currentCollectionNum);
 		}
 		
-		if(currentCollection.count() < Constants.maxItemNumberPerCollection) {
+		System.out.println("NAME : " + currentCollection.getName() + " COUNT : " + currentCollection.getCount());
+		if(currentCollection.getCount() < Constants.maxItemNumberPerCollection) {
 			
 			System.out.println("data is not ready, please wait");
 		} else {
