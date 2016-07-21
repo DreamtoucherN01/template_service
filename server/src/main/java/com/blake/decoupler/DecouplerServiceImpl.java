@@ -92,18 +92,18 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 		}
 		graphDB = GraphDatabaseFactory.databaseFor(Constants.SERVER_ROOT_URI);  
 		nodeIndex = graphDB.index().forNodes(com.blake.neo4j.Neo4jService.INDEXNAME);
-		currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + 0);
-//		Node node = neo4jService.findNodeByName(graphDB, "currentCollectionNum");
-//		if(node == null) {
-//			
-//			currentCollectionNum = 0;
-//			currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + currentCollectionNum);
-//			persistCurrentCollectionNum(graphDB, nodeIndex, currentCollectionNum);
-//		} else {
-//			
-//			currentCollectionNum =Integer.valueOf( (String) (node.getProperty("value")) );
-//			currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + currentCollectionNum);
-//		}
+		
+		Node node = neo4jService.findNodeByName(graphDB, "currentCollectionNum");
+		if(node == null) {
+			
+			currentCollectionNum = 0;
+			currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + currentCollectionNum);
+			persistCurrentCollectionNum(graphDB, nodeIndex, currentCollectionNum);
+		} else {
+			
+			currentCollectionNum =Integer.valueOf( (String) (node.getProperty("value")) );
+			currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + currentCollectionNum);
+		}
 		
 		System.out.println("NAME : " + currentCollection.getName() + " COUNT : " + currentCollection.getCount());
 		if(currentCollection.getCount() < Constants.maxItemNumberPerCollection) {
