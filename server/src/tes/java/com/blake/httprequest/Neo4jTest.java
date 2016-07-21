@@ -69,6 +69,14 @@ public class Neo4jTest {
 			System.out.println("find : " + node.getProperty("age"));
 		}
 		
+		Iterable<Node> node1 = graphDB.getAllNodes();
+		Iterator<Node> it = node1.iterator();
+		while(it.hasNext()) {
+			
+			neo.deleteNode(it.next());
+		}
+		
+		
 //		neo.printNodeFriends(graphDB.getNodeById(52));
         try {  
               
