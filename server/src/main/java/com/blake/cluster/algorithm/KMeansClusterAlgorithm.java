@@ -10,7 +10,7 @@ public class KMeansClusterAlgorithm {
 	
 	private double MAX_NUM = 100000;
 	
-	private double MAX_TIME = 10;
+	private double MAX_TIME = 100;
 	
 	private double sampleInput[][];
 	
@@ -144,7 +144,7 @@ public class KMeansClusterAlgorithm {
 			
 			totalDist += EulcideanDistance(sampleOutput[i],sampleOutput2[i]);
 		}
-		if(totalDist < 0.01) {
+		if(totalDist < 0.0001) {
 			
 			return true;
 		}
