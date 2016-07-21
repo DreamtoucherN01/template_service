@@ -80,6 +80,7 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 		if(Constants.neo4jrun) {
 			
 			System.out.println("wait for the last operation finish");
+			return;
 		} else {
 			
 			Constants.neo4jrun = true;
