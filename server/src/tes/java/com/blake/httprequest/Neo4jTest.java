@@ -64,18 +64,21 @@ public class Neo4jTest {
 //		neo.addRelationship(qq, gg, com.blake.neo4j.Neo4jService.RelTypes.FAMILIAR);
 //		neo.addRelationship(jack, qq, com.blake.neo4j.Neo4jService.RelTypes.FAMILIAR);
 		
-		Node node = neo.findNodeByName(graphDB, "qq");
+		Node node = neo.findNodeByName(graphDB, "Fireground");
 		if(node != null) {
-			System.out.println("find : " + node.getProperty("age"));
+			System.out.println("find : " + node.getProperty("text"));
 		}
 		
 		Iterable<Node> node1 = graphDB.getAllNodes();
 		Iterator<Node> it = node1.iterator();
+		int num = 0;
 		while(it.hasNext()) {
+			it.next();
+			num++;
 			
-			neo.deleteNode(it.next());
 		}
 		
+		System.out.println("number : " + num);
 		
 //		neo.printNodeFriends(graphDB.getNodeById(52));
         try {  

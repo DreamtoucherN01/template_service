@@ -9,6 +9,7 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.rest.graphdb.GraphDatabaseFactory;
 
+import com.blake.dataprocessor.backup.BackupData;
 import com.blake.dataprocessor.twitter.TwitterDataProcessor;
 import com.blake.neo4j.Neo4jService;
 import com.blake.util.Constants;
@@ -70,7 +71,6 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 		
 		HashMap<String,String> props = TwitterDataProcessor.getProperties(treets);
 		neo4jService.addNode(graphDB, nodeIndex, props);
-		System.out.println(props);
 	}
 
 	public boolean checkDataSource() {
@@ -120,7 +120,7 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 		    	Info info = gson.fromJson( gson.toJson(next), Info.class);
 		    	inserDataIntoNeo4j(JSONObject.fromObject(info.getBody()));
 		    }
-			
+		    BackupData.backupData(mongoDBAccessor, currentCollectionNum);
 			persistCurrentCollectionNum(graphDB, nodeIndex, ++currentCollectionNum);
 		}
 		
