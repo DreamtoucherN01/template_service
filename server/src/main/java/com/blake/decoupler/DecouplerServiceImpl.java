@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import net.sf.json.JSONObject;
 
+import org.apache.log4j.Logger;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
@@ -11,6 +12,7 @@ import org.neo4j.rest.graphdb.GraphDatabaseFactory;
 
 import com.blake.dataprocessor.backup.BackupData;
 import com.blake.dataprocessor.twitter.TwitterDataProcessor;
+import com.blake.listener.BackgroundListener;
 import com.blake.neo4j.Neo4jService;
 import com.blake.util.Constants;
 import com.blake.util.share.DBaccessor;
@@ -21,6 +23,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 public class DecouplerServiceImpl implements DecouplerService ,Runnable {
+	
+	Logger logger = Logger.getLogger(DecouplerServiceImpl.class);
 	
 	Neo4jService neo4jService;
 	
@@ -80,11 +84,11 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 
 	public void serviceStart() {
 		
-		System.out.println("start transtering data to neo4j database");
+		logger.info("start transtering data to neo4j database");
 		
 		if(Constants.neo4jrun) {
 			
-			System.out.println("wait for the last operation finish");
+			logger.info("wait for the last operation finish");
 			return;
 		} else {
 			
@@ -105,10 +109,10 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 			currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + currentCollectionNum);
 		}
 		
-		System.out.println("NAME : " + currentCollection.getName() + " COUNT : " + currentCollection.getCount());
+		logger.info("NAME : " + currentCollection.getName() + " COUNT : " + currentCollection.getCount());
 		if(currentCollection.getCount() < Constants.maxItemNumberPerCollection) {
 			
-			System.out.println("data is not ready, please wait");
+			logger.info("data is not ready, please wait");
 		} else {
 			
 			
@@ -126,7 +130,7 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 		
 		Constants.neo4jrun = false;
 		
-		System.out.println("transtering data to neo4j finished");
+		logger.info("transtering data to neo4j finished");
 	}
 
 	private void persistCurrentCollectionNum(GraphDatabaseService graphDB2,

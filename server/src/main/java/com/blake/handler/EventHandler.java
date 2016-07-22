@@ -8,8 +8,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import net.sf.json.JSONObject;
 
+import com.blake.decoupler.DecouplerServiceImpl;
 import com.blake.response.UnifiedResponse;
 import com.blake.util.Constants;
 import com.blake.util.share.DBaccessor;
@@ -22,7 +25,7 @@ public class EventHandler{
 
 	private HttpServletRequest request = null;
 	private HttpServletResponse response = null;
-
+	Logger logger = Logger.getLogger(EventHandler.class);
 	
 	public EventHandler(HttpServletRequest request, HttpServletResponse response) {
 		

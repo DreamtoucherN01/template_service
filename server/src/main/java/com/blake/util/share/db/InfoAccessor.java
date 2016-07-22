@@ -129,7 +129,6 @@ public class InfoAccessor implements IInfoDao{
 		for(int i = 0;i < Constants.collectionNumber; i++) {
 			
 			twitter = dbaccessor.getDb().getCollection("twitter_" + i);
-			System.out.println("query " + twitter.getName());
 			Pattern john = Pattern.compile(criteriaInfo,Pattern.CASE_INSENSITIVE);
 			DBObject query = new BasicDBObject("key", john);
 			DBCursor cur = twitter.find(query);

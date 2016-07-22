@@ -33,7 +33,7 @@ public class DBRequestHandler implements HttpRequestHandler{
 			UnifiedResponse.sendErrResponse(response, 1001);
 		}
 		
-		System.out.println("get collection from : " + request.getRemoteAddr() + " - " + request.getRemoteHost());
+		logger.info("get collection from : " + request.getRemoteAddr() );
 		
 		EventHandler eventHandler = new EventHandler(request, response);
 		eventHandler.handleEvent();
