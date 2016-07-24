@@ -19,6 +19,8 @@ import org.neo4j.rest.graphdb.RestAPIFacade;
 import org.neo4j.rest.graphdb.RestGraphDatabase;
 import org.neo4j.rest.graphdb.query.RestCypherQueryEngine;
 
+import com.blake.cluster.ClusterController;
+import com.blake.neo4j.Neo4jService;
 import com.blake.neo4j.Neo4jService.RelTypes;
 import com.blake.neo4j.Neo4jServiceImp;
 
@@ -43,7 +45,7 @@ public class Neo4jTest {
 		graphDB = GraphDatabaseFactory.databaseFor("http://192.168.185.59:7474/db/data");  
 		nodeIndex = graphDB.index().forNodes(com.blake.neo4j.Neo4jService.INDEXNAME);
 		Transaction tx = graphDB.beginTx(); 
-		Neo4jServiceImp neo = new Neo4jServiceImp();
+		Neo4jService neo = new Neo4jServiceImp();
 		
 //		HashMap props = new HashMap();
 //		props.put("name", "jack");
@@ -64,21 +66,38 @@ public class Neo4jTest {
 //		neo.addRelationship(qq, gg, com.blake.neo4j.Neo4jService.RelTypes.FAMILIAR);
 //		neo.addRelationship(jack, qq, com.blake.neo4j.Neo4jService.RelTypes.FAMILIAR);
 		
-		Node node = neo.findNodeByName(graphDB, "Fireground");
-		if(node != null) {
-			System.out.println("find : " + node.getProperty("text"));
-		}
+//		Node node = neo.findNodeByName(graphDB, "Fireground");
 		
 		Iterable<Node> node1 = graphDB.getAllNodes();
 		Iterator<Node> it = node1.iterator();
-		int num = 0;
 		while(it.hasNext()) {
-			it.next();
-			num++;
 			
+			Node node = it.next();
+			node.setProperty("visited", "0");
+			Iterable<Relationship> relationships = node.getRelationships(RelTypes.RETREET, Direction.OUTGOING);
+			for(Relationship r : relationships) {
+				r.delete();
+			}
 		}
 		
-		System.out.println("number : " + num);
+		ClusterController.doNEO4JReteetCluster(graphDB, neo);
+		
+		
+//		if(node != null) {
+//			System.out.println("find : " + node.getProperty("text"));
+//		}
+//		
+//		Iterable<Node> node1 = graphDB.getAllNodes();
+//		Iterator<Node> it = node1.iterator();
+//		while(it.hasNext()) {
+//			
+//			Node node = it.next();
+//			Iterable<Relationship> relationships = node.getRelationships(RelTypes.RETREET, Direction.OUTGOING);
+//			for(Relationship r : relationships) {
+//				r.delete();
+//			}
+//			node.delete();
+//		}
 		
 //		neo.printNodeFriends(graphDB.getNodeById(52));
         try {  

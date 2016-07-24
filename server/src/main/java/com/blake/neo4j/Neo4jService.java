@@ -21,7 +21,9 @@ public interface Neo4jService {
     static enum RelTypes implements RelationshipType {  
     	
         FAMILIAR,  
-        UNFAMILIAR 
+        UNFAMILIAR,
+        GROUP,
+        RETREET
     }  
 	
 	void checkDatabaseIsRunning();

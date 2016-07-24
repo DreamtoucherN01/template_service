@@ -10,6 +10,7 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
 import org.neo4j.rest.graphdb.GraphDatabaseFactory;
 
+import com.blake.cluster.ClusterController;
 import com.blake.dataprocessor.backup.BackupData;
 import com.blake.dataprocessor.twitter.TwitterDataProcessor;
 import com.blake.listener.BackgroundListener;
@@ -74,7 +75,8 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 
 		
 		HashMap<String,String> props = TwitterDataProcessor.getProperties(treets);
-		neo4jService.addNode(graphDB, nodeIndex, props);
+		Node node = neo4jService.addNode(graphDB, nodeIndex, props);
+		ClusterController.doNEO4JReteetCluster(graphDB, neo4jService, node);
 	}
 
 	public boolean checkDataSource() {
