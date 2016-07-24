@@ -31,7 +31,7 @@ public class TwitterDataProcessor {
 		JSONObject retweetedStatus = json.getJSONObject("retweeted_status");
 		if (!retweetedStatus.isNullObject() ) {
 			
-			JSONObject retweetedUser = json.getJSONObject("user");
+			JSONObject retweetedUser = retweetedStatus.getJSONObject("user");
 			props.put("retweetedname", ParseUtil.getRawString("name", retweetedUser));
 			props.put("retweetedtime_zone", ParseUtil.getRawString("time_zone", retweetedUser));
 			props.put("retweeteduserid", ParseUtil.getRawString("id", retweetedUser));
