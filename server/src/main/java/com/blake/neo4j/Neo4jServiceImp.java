@@ -64,6 +64,10 @@ public class Neo4jServiceImp implements Neo4jService {
 
 	public void addRelationship(Node startNode, Node endNode, RelTypes relTypes) {
 
+		if(endNode == null || startNode == null) {
+			
+			return;
+		}
 		startNode.createRelationshipTo( endNode, relTypes );  
 	}
 
