@@ -43,18 +43,31 @@ public class EventHandler{
 			
 			reader = new BufferedReader(new InputStreamReader(request.getInputStream(),"UTF-8"));
 			while((line = reader.readLine()) != null) {
+				
 				buffer.append(line);
 			}
 			
 		} catch (IOException e) {
 
+			logger.error("error when reading transferring data ");
 			e.printStackTrace();
+			return;
 		}
 		
 		DBaccessor dbaccessor = new DBaccessor();
 		InfoAccessor accessor = new InfoAccessor(dbaccessor);
 		
-		JSONObject jo =   JSONObject.fromObject(buffer.toString());
+		JSONObject jo = null;
+		try{
+			
+			jo =   JSONObject.fromObject(buffer.toString());
+			
+		} catch(Exception e) {
+			
+			logger.error("message is not wrapped using json, please check ");
+			e.printStackTrace();
+			return;
+		}
 		String type = (String) jo.get("type");
 		
 		if(DBOperationType.fromString(type) == DBOperationType.insert) {
