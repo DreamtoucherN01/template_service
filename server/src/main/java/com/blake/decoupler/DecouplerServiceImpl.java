@@ -113,6 +113,25 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 		if(currentCollection.getCount() < Constants.maxItemNumberPerCollection) {
 			
 			logger.info("data is not ready, please wait");
+			if(currentCollection.getCount() == 0) {
+				
+				logger.info("check back up data");
+				currentCollection = mongoDBAccessor.getDb().getCollection("twitter_" + currentCollectionNum + "_bak");
+				if(currentCollection.getCount() == Constants.maxItemNumberPerCollection) {
+					
+					logger.info("using back up data");
+					DBCursor cur = currentCollection.find();
+				    while (cur.hasNext()) {
+				    	
+				    	DBObject next = cur.next();
+				    	Gson gson=new Gson();
+				    	Info info = gson.fromJson( gson.toJson(next), Info.class);
+				    	inserDataIntoNeo4j(JSONObject.fromObject(info.getBody()));
+				    }
+					persistCurrentCollectionNum(graphDB, nodeIndex, ++currentCollectionNum);
+				}
+			}
+			
 		} else {
 			
 			
