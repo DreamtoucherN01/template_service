@@ -129,7 +129,6 @@ public class ClusterController {
 	
 	public static void doNEO4JReteetCluster(GraphDatabaseService graphDB, Neo4jService neo4jService, Node node) {
 		
-		System.out.print(" " + node.getProperty("name") );
 		if( !checkVisited(node)) {
 			
 			node.setProperty("visited", "1");
