@@ -23,7 +23,8 @@ public interface Neo4jService {
         FAMILIAR,  
         UNFAMILIAR,
         GROUP,
-        RETREET
+        RETREET,
+        CLOSER
     }  
 	
 	void checkDatabaseIsRunning();

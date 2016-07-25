@@ -8,8 +8,6 @@ import java.util.Map.Entry;
 
 public class KMeansClusterAlgorithm {
 	
-	private double MAX_NUM = 100000;
-	
 	private double MAX_TIME = 100;
 	
 	private double sampleInput[][];

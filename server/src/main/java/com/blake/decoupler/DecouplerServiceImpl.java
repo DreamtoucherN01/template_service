@@ -13,7 +13,6 @@ import org.neo4j.rest.graphdb.GraphDatabaseFactory;
 import com.blake.cluster.ClusterController;
 import com.blake.dataprocessor.backup.BackupData;
 import com.blake.dataprocessor.twitter.TwitterDataProcessor;
-import com.blake.listener.BackgroundListener;
 import com.blake.neo4j.Neo4jService;
 import com.blake.util.Constants;
 import com.blake.util.share.DBaccessor;
