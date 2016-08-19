@@ -2,6 +2,7 @@ package com.blake.util.share.type;
 
 public enum DBOperationType {
 
+	count("count"),
 	insert("insert"),
 	delete("delete"),
 	deleteall("deleteall"),

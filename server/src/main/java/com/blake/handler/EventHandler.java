@@ -70,6 +70,13 @@ public class EventHandler{
 		}
 		String type = (String) jo.get("type");
 		
+		if(DBOperationType.fromString(type) == DBOperationType.count) {
+			
+			long count = accessor.count(null);
+			UnifiedResponse.sendSuccessResponse(response, count);
+			return;
+		}
+		
 		if(DBOperationType.fromString(type) == DBOperationType.insert) {
 			
 			JSONObject body = (JSONObject) jo.get("body");

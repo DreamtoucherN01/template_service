@@ -37,6 +37,8 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
     private DBCollection currentCollection;
     
     private int currentCollectionNum;
+    
+    private int status;
 
 	public DecouplerServiceImpl(Neo4jService neo4jService,
 			DBaccessor mongoDBAccessor) {
@@ -94,6 +96,20 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 		} else {
 			
 			Constants.neo4jrun = true;
+			Node run = neo4jService.findNodeByName(graphDB, "decoupleStatus");
+			if(run == null) {
+				
+				persistDecoupleStatus(graphDB, nodeIndex, 1);
+			} else {
+				
+				status = Integer.valueOf( (String) (run.getProperty("value")) );
+				if( 1 == status ) {
+					
+					logger.info("another server is doing this operation , wait for the last operation finish");
+					return;
+				}
+				persistDecoupleStatus(graphDB, nodeIndex, 1);
+			}
 		}
 		graphDB = GraphDatabaseFactory.databaseFor(Constants.SERVER_ROOT_URI);  
 		nodeIndex = graphDB.index().forNodes(com.blake.neo4j.Neo4jService.INDEXNAME);
@@ -149,7 +165,7 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 		}
 		
 		Constants.neo4jrun = false;
-		
+		persistDecoupleStatus(graphDB, nodeIndex, 0);
 		logger.info("transtering data to neo4j finished");
 	}
 
@@ -165,6 +181,27 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 		HashMap<String,String> props = new HashMap<String,String>();
 		props.put("name", "currentCollectionNum");
 		props.put("value", String.valueOf(currentCollectionNum2));
+		neo4jService.addNode(graphDB, nodeIndex, props);
+	}
+	
+	/**
+	 * 
+	 * @param graphDB2
+	 * @param nodeIndex2
+	 * @param status 0 means not running 1 means running
+	 */
+	private void persistDecoupleStatus(GraphDatabaseService graphDB2,
+			Index<Node> nodeIndex2, int status) {
+
+		Node node = neo4jService.findNodeByName(graphDB, "decoupleStatus");
+		if(node != null) {
+			
+			neo4jService.deleteNode(node);
+		}
+		
+		HashMap<String,String> props = new HashMap<String,String>();
+		props.put("name", "decoupleStatus");
+		props.put("value", String.valueOf(status));
 		neo4jService.addNode(graphDB, nodeIndex, props);
 	}
 
