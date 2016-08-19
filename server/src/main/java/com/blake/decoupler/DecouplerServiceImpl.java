@@ -88,6 +88,8 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 	public void serviceStart() {
 		
 		logger.info("start transtering data to neo4j database");
+		graphDB = GraphDatabaseFactory.databaseFor(Constants.SERVER_ROOT_URI);  
+		nodeIndex = graphDB.index().forNodes(com.blake.neo4j.Neo4jService.INDEXNAME);
 		
 		if(Constants.neo4jrun) {
 			
@@ -95,24 +97,23 @@ public class DecouplerServiceImpl implements DecouplerService ,Runnable {
 			return;
 		} else {
 			
-			Constants.neo4jrun = true;
-			Node run = neo4jService.findNodeByName(graphDB, "decoupleStatus");
-			if(run == null) {
+			Node runStatus = neo4jService.findNodeByName(graphDB, "decoupleStatus");
+			if(runStatus == null) {
 				
+				Constants.neo4jrun = true;
 				persistDecoupleStatus(graphDB, nodeIndex, 1);
 			} else {
 				
-				status = Integer.valueOf( (String) (run.getProperty("value")) );
+				status = Integer.valueOf( (String) (runStatus.getProperty("value")) );
 				if( 1 == status ) {
 					
 					logger.info("another server is doing this operation , wait for the last operation finish");
 					return;
 				}
+				Constants.neo4jrun = true;
 				persistDecoupleStatus(graphDB, nodeIndex, 1);
 			}
 		}
-		graphDB = GraphDatabaseFactory.databaseFor(Constants.SERVER_ROOT_URI);  
-		nodeIndex = graphDB.index().forNodes(com.blake.neo4j.Neo4jService.INDEXNAME);
 		
 		Node node = neo4jService.findNodeByName(graphDB, "currentCollectionNum");
 		if(node == null) {
