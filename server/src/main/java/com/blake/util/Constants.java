@@ -40,4 +40,6 @@ public class Constants {
 	
 	public static String  SERVER_ROOT_URI = "http://192.168.185.59:7474/db/data/";
 	
+	public static double similarityThreshold = 0.0000000001;
+	
 }
